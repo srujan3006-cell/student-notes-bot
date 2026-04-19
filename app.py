@@ -128,7 +128,7 @@ if st.button("Generate Document"):
                 st.download_button(
                     label="Download .docx File",
                     data=docx_file,
-                    file_name=f"{topic.replace(' ', '_')}.docx",
+                    file_name="Generated_Notes.docx",
                     mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                 )
                 
