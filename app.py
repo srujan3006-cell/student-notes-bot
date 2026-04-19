@@ -102,24 +102,32 @@ if st.button("Generate Document"):
             else:
                 style_instruction = "Structure this as standard academic notes with a logical flow of concepts."
             
-            # --- Clean, Text-Only Prompt ---
+           # --- Clean, Text-Only Prompt ---
             prompt = f"""
-                Write {depth} notes on {topic}. {style_instruction} 
-                Use '##' for section headers and bullet points for key facts. 
-                If there are formulas, you MUST provide them in a Markdown table with two columns: 'Formula' and 'Function/Description'.
-                Do not use conversational filler.
-                """
+            Write {depth} notes on {topic}. {style_instruction} 
+            Use '##' for section headers and bullet points for key facts. 
+            If there are formulas, you MUST provide them in a Markdown table with two columns: 'Formula' and 'Function/Description'.
+            Do not use conversational filler.
+            """
             
-            # Generate Text
-            response = model.generate_content(prompt)
-            
-            # Create the docx in memory
-            docx_file = generate_docx(response.text, topic)
-            
-            st.success(f"{template} generated successfully!")
-            st.download_button(
-                label="Download .docx File",
-                data=docx_file,
-                file_name=f"{topic.replace(' ', '_')}.docx",
-                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-            )
+            try:
+                # Generate Text
+                response = model.generate_content(prompt)
+                
+                # Create the docx in memory (This line used to crash if response.text was empty)
+                docx_file = generate_docx(response.text, topic)
+                
+                st.success(f"{template} generated successfully!")
+                st.download_button(
+                    label="Download .docx File",
+                    data=docx_file,
+                    file_name=f"{topic.replace(' ', '_')}.docx",
+                    mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                )
+                
+            except ValueError:
+                # Catch the empty response error gracefully
+                st.error("⚠️ The AI safety filters blocked this response, or it returned empty text. Please try tweaking your topic slightly!")
+            except Exception as e:
+                # Catch any other random errors
+                st.error(f"⚠️ An unexpected error occurred: {e}")
