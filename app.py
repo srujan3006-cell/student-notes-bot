@@ -109,11 +109,12 @@ if st.button("Generate Document"):
             else:
                 style_instruction = "Structure this as standard academic notes with a logical flow of concepts."
             
-           # --- Clean, Text-Only Prompt ---
+          # --- Clean, Text-Only Prompt ---
             prompt = f"""
             Write {depth} notes on {topic}. {style_instruction} 
             Use '##' for section headers and bullet points for key facts. 
             If there are formulas, you MUST provide them in a Markdown table with two columns: 'Formula' and 'Function/Description'.
+            CRITICAL RULE: Do NOT use LaTeX or MathJax formatting (no dollar signs $, no slashes \\). Write formulas using standard plain text and keyboard symbols so they are easily readable without a math renderer (e.g., use "Sum of V_rises = Sum of V_drops").
             Do not use conversational filler.
             """
             
