@@ -5,7 +5,7 @@ from io import BytesIO
 import google.generativeai as genai
 
 # Configure your API Key securely!
-genai.configure(api_key=st.secrets["AIzaSyDnp4xHi9kvs-kGHIp7CFWNCdQnXtI156w"]) 
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"]) 
 model = genai.GenerativeModel('gemini-2.5-flash') 
 
 def generate_docx(text, title):
