@@ -4,8 +4,15 @@ import docx
 from io import BytesIO
 import google.generativeai as genai
 
-# Configure your API Key securely!
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"]) 
+# --- NEW: Page Configuration ---
+st.set_page_config(
+    page_title="Student Note Architect",
+    page_icon="🎓",
+    layout="centered"
+)
+
+# Configure your API Key here!
+genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 model = genai.GenerativeModel('gemini-2.5-flash') 
 
 def generate_docx(text, title):
